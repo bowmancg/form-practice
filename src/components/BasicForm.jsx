@@ -1,5 +1,9 @@
 import useInput from "../hooks/use-input";
 
+const isNotEmpty = value => value.trim() !== ''
+
+const isEmail = value => value.includes('@')
+
 const BasicForm = (props) => {
 
     const {
@@ -9,7 +13,7 @@ const BasicForm = (props) => {
         valueChangeHandler: firstNameChangedHandler,
         inputBlurHandler: firstNameBlurHandler,
         reset: resetFirstNameInput
-    } = useInput(value => value.trim() !== '')
+    } = useInput(isNotEmpty)
 
     const {
         value: enteredLastName,
@@ -18,7 +22,7 @@ const BasicForm = (props) => {
         valueChangeHandler: lastNameChangeHandler,
         inputBlurHandler: lastNameBlurHandler,
         reset: resetLastNameInput
-    } = useInput(value => value.trim() !== '')
+    } = useInput(isNotEmpty)
 
     const {
         value: enteredEmail,
@@ -27,7 +31,7 @@ const BasicForm = (props) => {
         valueChangeHandler: emailChangeHandler,
         inputBlurHandler: emailBlurHandler,
         reset: resetEmailInput
-    } = useInput(value => value.includes('@'))
+    } = useInput(isEmail)
 
     let formIsValid = false
 
@@ -38,7 +42,7 @@ const BasicForm = (props) => {
     const formSubHandler = event => {
         event.preventDefault()
 
-        if (!enteredFirstNameIsValid && !enteredLastNameIsValid) {
+        if (!formIsValid) {
             return
         }
 
@@ -61,22 +65,22 @@ const BasicForm = (props) => {
                 <div className={firstNameInputClasses}>
                     <label htmlFor='name'>First Name</label>
                     <input
-                    type='text'
-                    id='name'
-                    onChange={firstNameChangedHandler}
-                    onBlur={firstNameBlurHandler}
-                    value={enteredFirstName}
+                        type='text'
+                        id='name'
+                        onChange={firstNameChangedHandler}
+                        onBlur={firstNameBlurHandler}
+                        value={enteredFirstName}
                     />
                     {firstNameInputHasError && <p className='error-text'>Field cannot be empty.</p>}
                 </div>
                 <div className={lastNameInputClasses}>
                     <label htmlFor='name'>Last Name</label>
                     <input
-                    type='text'
-                    id='name'
-                    onChange={lastNameChangeHandler}
-                    onBlur={lastNameBlurHandler}
-                    value={enteredLastName}
+                        type='text'
+                        id='name'
+                        onChange={lastNameChangeHandler}
+                        onBlur={lastNameBlurHandler}
+                        value={enteredLastName}
                     />
                     {lastNameInputHasError && <p className='error-text'>Field cannot be empty.</p>}
                 </div>
@@ -84,11 +88,11 @@ const BasicForm = (props) => {
             <div className={emailInputClasses}>
                 <label htmlFor='name'>E-Mail Address</label>
                 <input
-                type='text'
-                id='name'
-                onChange={emailChangeHandler}
-                onBlur={emailBlurHandler}
-                value={enteredEmail}
+                    type='text'
+                    id='name'
+                    onChange={emailChangeHandler}
+                    onBlur={emailBlurHandler}
+                    value={enteredEmail}
                 />
                 {emailInputHasError && <p className="error-text">Enter valid E-mail.</p>}
             </div>
